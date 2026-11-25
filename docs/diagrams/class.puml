@@ -1,0 +1,49 @@
+@startuml
+abstract class Polzovatel {
+  +name : str
+  +phone : str
+  +login()
+}
+class Prodavec {
+  +publishAd(title, price) : Objyavlenie
+}
+class Pokupatel {
+  +buy(ad) : Sdelka
+}
+class Moderator {
+  +ban(user)
+}
+class Objyavlenie {
+  +title : str
+  +price : int
+  +status : str
+}
+class Sdelka {
+  +price : int
+  +date : datetime
+}
+class Otzyv {
+  +rating : int
+  +text : str
+}
+class Zhaloba {
+  +reason : str
+  +status : str
+}
+class Photo {
+  +url : str
+}
+
+Polzovatel <|-- Prodavec
+Polzovatel <|-- Pokupatel
+Polzovatel <|-- Moderator
+Prodavec "1" --> "0..*" Objyavlenie : публикует
+Pokupatel "1" --> "0..*" Sdelka : совершает
+Objyavlenie "1" --> "0..1" Sdelka : продано в
+Pokupatel "1" --> "0..*" Otzyv : пишет
+Otzyv "0..*" --> "1" Prodavec : о продавце
+Pokupatel "1" --> "0..*" Zhaloba : подаёт
+Zhaloba "0..*" --> "1" Objyavlenie : на объявление
+Moderator "1" --> "0..*" Zhaloba : рассматривает
+Objyavlenie "1" *-- "0..10" Photo : содержит
+@enduml

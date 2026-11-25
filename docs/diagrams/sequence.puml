@@ -1,0 +1,20 @@
+@startuml
+actor "Покупатель" as B
+participant "Приложение" as App
+participant "Сервис сделок" as Deals
+database "База данных" as DB
+participant "Уведомления" as Notify
+
+B -> App : нажать «Купить»
+App -> Deals : создать сделку(adId, buyerId)
+Deals -> DB : проверить, продано ли объявление
+DB --> Deals : статус объявления
+alt объявление свободно
+  Deals --> App : сделка создана
+  Deals -> Notify : сообщить продавцу
+  App --> B : покупка оформлена
+else уже продано
+  Deals --> App : ошибка 409
+  App --> B : «Товар уже продан»
+end
+@enduml

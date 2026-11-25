@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+actor "Продавец" as S
+actor "Покупатель" as B
+actor "Модератор" as M
+actor "Платёжная система" as P
+
+rectangle "Барахолка" {
+  usecase "Войти в систему" as UC0
+  usecase "Опубликовать объявление" as UC1
+  usecase "Оформить покупку" as UC2
+  usecase "Оставить отзыв" as UC3
+  usecase "Подать жалобу" as UC4
+  usecase "Рассмотреть жалобу" as UC5
+  usecase "Оплатить доставку" as UC6
+}
+
+S --> UC1
+B --> UC2
+B --> UC3
+B --> UC4
+M --> UC5
+B --> UC6
+P --> UC6
+
+UC1 ..> UC0 : <<include>>
+UC2 ..> UC0 : <<include>>
+UC4 ..> UC0 : <<include>>
+UC5 ..> UC0 : <<include>>
+UC3 ..> UC2 : <<extend>>
+UC6 ..> UC2 : <<extend>>
+@enduml
