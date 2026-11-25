@@ -1,0 +1,12 @@
+stateDiagram-v2
+  state "На модерации" as Moderation
+  [*] --> Draft
+  Draft --> Moderation : отправить на модерацию
+  Moderation --> Draft : отклонено
+  Moderation --> Published : одобрено
+  Published --> Sold : покупка
+  Published --> Archived : снять с продажи
+  Published --> Blocked : модератор блокирует
+  Blocked --> Published : разблокировать
+  Sold --> [*]
+  Archived --> [*]

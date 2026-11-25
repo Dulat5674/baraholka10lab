@@ -1,0 +1,48 @@
+classDiagram
+  class Polzovatel {
+    <<abstract>>
+    +str name
+    +str phone
+    +login()
+  }
+  class Prodavec {
+    +publishAd(title, price) Objyavlenie
+  }
+  class Pokupatel {
+    +buy(ad) Sdelka
+  }
+  class Moderator {
+    +ban(user)
+  }
+  class Objyavlenie {
+    +str title
+    +int price
+    +str status
+  }
+  class Sdelka {
+    +int price
+    +datetime date
+  }
+  class Otzyv {
+    +int rating
+    +str text
+  }
+  class Zhaloba {
+    +str reason
+    +str status
+  }
+  class Photo {
+    +str url
+  }
+  Polzovatel <|-- Prodavec
+  Polzovatel <|-- Pokupatel
+  Polzovatel <|-- Moderator
+  Prodavec "1" --> "0..*" Objyavlenie : публикует
+  Pokupatel "1" --> "0..*" Sdelka : совершает
+  Objyavlenie "1" --> "0..1" Sdelka : продано в
+  Pokupatel "1" --> "0..*" Otzyv : пишет
+  Otzyv "0..*" --> "1" Prodavec : о продавце
+  Pokupatel "1" --> "0..*" Zhaloba : подаёт
+  Zhaloba "0..*" --> "1" Objyavlenie : на объявление
+  Moderator "1" --> "0..*" Zhaloba : рассматривает
+  Objyavlenie "1" *-- "0..10" Photo : содержит
